@@ -1,0 +1,116 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  background: none;
+  outline: none;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+
+.container {
+  margin: 0 auto;
+  width:80%;
+  text-align: center;
+}
+
+
+h1 {
+  text-align: center;
+  color: white;
+  background-color: rgba(255,255,255,0.3);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+ul {
+  text-align: center;
+  list-style: none;
+}
+
+a {
+  color: #6f6f6f;
+  text-decoration: none;
+}
+
+li {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  position:relative;
+}
+
+li:nth-child(2n) {
+  text-align: center;
+  background-color: rgba(247, 247, 247, 0.6);
+  position: relative;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background: #00C9FF;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#get {
+  margin: 0 auto;
+}
+
+.clicked {
+  font-weight: bold;
+  color: #8a8988;
+}
+
+.genres {
+  width: 30%;
+  margin: 10px auto;
+  color: #6f6f6f;
+}
+
+#genre {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 3px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  color: #868686;
+  background-color: rgba(255,255,255,0.3);
+  border: none;
+  outline: none;
+}
+
+#genre:focus {
+  outline: none;
+}
+
+span {
+  background: #e74c3c;
+  width: 0;
+  display: inline-block;
+  color: white;
+  transition: 0.2s linear;
+  opacity: 0;
+  left:0px;
+  position: absolute;
+}
+
+li:hover span{
+  width: 60px;
+  opacity: 1.0;
+}
+
+#songList {
+  margin-top: 10px;
+}
+
+#allGenres li:last-child {
+  display: none;
+}
+
+.bclicked {
+  background: rgba(255,255,255,0.3);
+}
