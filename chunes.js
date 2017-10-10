@@ -1,5 +1,4 @@
-//TO DO: Hover effect for buttons
-
+//TO DO: Add more genre specific subreddits (indieheads, popheads, etc..)
 var allTracks = [];
 var myGenres = [];
 
@@ -87,24 +86,33 @@ function listentothis() {
 }
 
 function r_hhh()  {
-  $.getJSON(
-  'https://www.reddit.com/r/hiphopheads.json?limit=100&after=t3_10omtd/',
-  function a(data) {
-    $.each(
-      data.data.children,
-      function (i, post) {
-        if (post.data.title.indexOf('FRESH')>=0) {
-          var htrack = {
-            title: post.data.title,
-            url: post.data.url,
-          }
-          window.allTracks.push(htrack)
-        }
-      }
-    )
-    r_music();
+  var hip = false
+  for (i=0; i<myGenres.length; i++) {
+    if (myGenres[i].indexOf('hip') >= 0) {
+      hip = true
+    }
   }
-)
+  if (hip === true) {
+    $.getJSON(
+    'https://www.reddit.com/r/hiphopheads.json?limit=100&after=t3_10omtd/',
+    function a(data) {
+      $.each(
+        data.data.children,
+        function (i, post) {
+          if (post.data.title.indexOf('FRESH')>=0) {
+            var htrack = {
+              title: post.data.title,
+              url: post.data.url,
+            }
+            window.allTracks.push(htrack)
+          }
+        }
+      )
+      r_music();
+    }
+  )
+  }
+  r_music();
 }
 
 function r_music() {
