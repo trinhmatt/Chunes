@@ -81,10 +81,20 @@ body {
   background-color: rgba(255,255,255,0.3);
   border: none;
   outline: none;
+  transition: 0.2s linear;
 }
 
 #genre:focus {
   outline: none;
+  background: rgba(255,255,255,0.7);
+}
+
+#genre::placeholder {
+  color: white;
+}
+
+#genre:focus::placeholder {
+  color: #6f6f6f;
 }
 
 span {

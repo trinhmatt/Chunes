@@ -81,8 +81,17 @@ function listentothis() {
   $.getJSON(
   'https://www.reddit.com/r/listentothis/.json?limit=100&after=t3_10omtd/',
   function (data) {
-    retrieve(data, r_hhh)
+    retrieve(data, r_music)
   });
+}
+
+function r_music() {
+  $.getJSON(
+  'https://www.reddit.com/r/music/.json?limit=100&after=t3_10omtd/',
+  function (data) {
+    retrieve(data, r_hhh);
+  }
+  )
 }
 
 function r_hhh()  {
@@ -108,20 +117,12 @@ function r_hhh()  {
           }
         }
       )
-      r_music();
+      deDupe();
     }
   )
+  } else {
+    deDupe();
   }
-  r_music();
-}
-
-function r_music() {
-  $.getJSON(
-  'https://www.reddit.com/r/music/.json?limit=100&after=t3_10omtd/',
-  function (data) {
-    retrieve(data, deDupe);
-  }
-  )
 }
 
 //Removes duplicates
