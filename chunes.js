@@ -1,20 +1,32 @@
-//TO DO: Add more genre specific subreddits (indieheads, popheads, etc..)
 var allTracks = [];
 var myGenres = [];
 
 var getTunes = $('#get').click(listentothis);
 
-var rightClicked = $('#songList').on('contextmenu', 'a', function() {
+var rightClicked = $('#songList').on('contextmenu', 'a', function(){
   $(this).addClass('clicked')
 });
 
-var leftClicked = $('#songList').on('click', 'a', function() {
+var leftClicked = $('#songList').on('click', 'a', function(){
   $(this).addClass('clicked')
 });
+
+var listHover = $("#songList").on("mouseenter", 'a', function() {
+  $(this).toggleClass('hover');
+}).on('mouseleave', 'a', function() {
+  $(this).toggleClass('hover');
+});
+
 
 var genreToggle = $('#slide').on('click', function(){
   $('.genres').slideToggle(500)
-})
+  $('#slide').toggleClass('minus')
+  if ($('#slide').hasClass('minus') === true) {
+    $('#slide').html('Genres -')
+  } else {
+    $('#slide').html('Genres +')
+  }
+  })
 
 var buttonHover = $('button').hover(
   function() {
@@ -23,7 +35,6 @@ var buttonHover = $('button').hover(
   function() {
     $(this).toggleClass('bclicked')
   })
-
 
 var addGenre = $('#genre').keypress(function(e){
   var l1 = '<li>'
