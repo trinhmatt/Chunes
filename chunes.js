@@ -85,6 +85,22 @@ function retrieve(data,callback) {
   callback();
 }
 
+function headRetrieve(data, callback) {
+  $.each(
+    data.data.children,
+    function (i, post) {
+      if (post.data.title.indexOf('FRESH')>=0) {
+        var htrack = {
+          title: post.data.title,
+          url: post.data.url,
+        }
+        window.allTracks.push(htrack)
+      }
+    }
+  )
+  callback();
+}
+
 function listentothis() {
   //To make sure that hitting the get tracks button more than once doesnt repeat the list
   $('#songList').html('')
@@ -100,12 +116,13 @@ function r_music() {
   $.getJSON(
   'https://www.reddit.com/r/music/.json?limit=100&after=t3_10omtd/',
   function (data) {
-    retrieve(data, r_hhh);
+    retrieve(data, hipFresh);
   }
   )
 }
 
-function r_hhh()  {
+//Refactor this shit 
+function hipFresh()  {
   var hip = false
   for (i=0; i<myGenres.length; i++) {
     if (myGenres[i].indexOf('hip') >= 0) {
@@ -115,22 +132,27 @@ function r_hhh()  {
   if (hip === true) {
     $.getJSON(
     'https://www.reddit.com/r/hiphopheads.json?limit=100&after=t3_10omtd/',
-    function a(data) {
-      $.each(
-        data.data.children,
-        function (i, post) {
-          if (post.data.title.indexOf('FRESH')>=0) {
-            var htrack = {
-              title: post.data.title,
-              url: post.data.url,
-            }
-            window.allTracks.push(htrack)
-          }
-        }
-      )
-      deDupe();
+    function (data) {
+      headRetrieve(data, indieFresh)
+    })
+  } else {
+  indieFresh();
+  }
+}
+
+function indieFresh() {
+  var indie = false
+  for (i=0; i<myGenres.length; i++) {
+    if (myGenres[i].indexOf('indie') >= 0) {
+      indie = true
     }
-  )
+  }
+  if (indie === true) {
+    $.getJSON(
+    'https://www.reddit.com/r/indieheads.json?limit=100&after=t3_10omtd/',
+    function (data) {
+      headRetrieve(data, deDupe)
+    })
   } else {
     deDupe();
   }

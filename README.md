@@ -1,6 +1,6 @@
 # Chunes
 
-Creates a list of new music from different subreddits 
+Creates a list of new music from different subreddits
 
 To do:
 
@@ -8,7 +8,8 @@ To do:
 
 -Allow sorting by title, upvotes, genre
 
--Re factor logic 
+-Re factor logic
 
 -Add more subreddits depending on genre (popheads, indieheads, etc.)
 
+-Include Mongo to allow user to save songs they like
