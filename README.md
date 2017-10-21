@@ -13,3 +13,10 @@ To do:
 -Add more subreddits depending on genre (popheads, indieheads, etc.)
 
 -Include Mongo to allow user to save songs they like
+
+
+Known issues:
+
+-Posts that contain a genre as a substring (POPular) are pushed through
+
+-Very inefficient run-time 

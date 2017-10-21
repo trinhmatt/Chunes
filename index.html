@@ -9,8 +9,9 @@
   crossorigin="anonymous"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
     <link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel='stylesheet' type='text/css' href='css/chunes.css'>
+    <link rel='stylesheet' type='text/css' href='assets/css/styles.css'>
     <link href="https://fonts.googleapis.com/css?family=Raleway:300i,400,700" rel="stylesheet">
+    <link rel="icon" href="assets/img/favicon-music.ico">
   </head>
   <body>
     <h1>CHUNES</h1>
@@ -22,10 +23,30 @@
         </ul>
       </div>
       <button id='get'>Get tracks</button>
-    <!-- Might have to do a table vs. ul-->
-      <ul id='songList'>
-      </ul>
+      <div id='instructions'>
+        <h2>Instructions</h2>
+        <ul>
+          <li>Click on Genres to add your favourite genres</li>
+          <li>Get your chunes</li>
+        </ul>
+      </div>
+      <div id='loader'></div>
+      <table id='songList'>
+        <tbody id='song2'>
+          <tr>
+            <th>
+              <button class='tableHead' id='sort'>Upvotes</button>
+            </th>
+            <th>
+              <button class='tableHead alpha-sort' id='title'>Title</button>
+            </th>
+            <th id='widthCorrect'>
+              <button class='tableHead alpha-sort' id='genreTable'>Genre</button>
+            </th>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <script src='chunes.js'></script>
+    <script src='assets/js/app.js'></script>
   </body>
 </html>
