@@ -208,7 +208,7 @@ function listentothis() {
     });
   } else {
     //Next step
-    alert('Add genres pls')
+    $('#error-display').slideToggle(300).delay(800).fadeOut(200)
   }
 }
 

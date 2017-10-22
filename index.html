@@ -16,13 +16,16 @@
   <body>
     <h1>CHUNES</h1>
     <div class='container'>
-      <button id='slide'>Genres +</button>
+      <button class='body-butt' id='slide'>Genres +</button>
       <div class='genres' style='display:none'>
         <input type='text' id='genre' placeholder="Add genre"></input>
         <ul id='allGenres'>
         </ul>
       </div>
-      <button id='get'>Get tracks</button>
+      <button class='body-butt' id='get'>Get tracks</button>
+      <div id='error-display'>
+        Error: No genres added
+      </div>
       <div id='instructions'>
         <h2>Instructions</h2>
         <ul>
