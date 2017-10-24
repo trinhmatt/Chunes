@@ -10,6 +10,8 @@ button {
   border-radius: 5px;
   padding: 5px;
   color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
 }
 
 .container {
@@ -25,6 +27,7 @@ h1 {
   background-color: rgba(255,255,255,0.3);
   padding: 10px;
   margin-bottom: 10px;
+  font-weight: 100;
 }
 
 ul {
@@ -44,7 +47,8 @@ a {
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
   background: #00C9FF;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -73,8 +77,9 @@ body {
   box-sizing: border-box;
   width: 100%;
   padding: 3px;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
+  font-weight: 100;
   color: #6f6f6f;
   background-color: rgba(255,255,255,0.3);
   border: none;
@@ -141,6 +146,7 @@ td {
   position: absolute;
   left: 33%;
   top: 40%;
+  font-weight: 100;
 }
 
 .table {
@@ -175,7 +181,7 @@ td {
 .tableHead {
   background: none;
   border: none;
-  font-weight: 600;
+  font-weight:normal;
   font-size: 20px;
   color: white;
 }
@@ -191,4 +197,8 @@ td {
   color: rgb(255, 0, 0);
   display:none;
   font-size: 14px;
+}
+
+h2 {
+  font-weight:normal;
 }

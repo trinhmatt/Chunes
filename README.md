@@ -11,11 +11,12 @@ To do:
 -Include Mongo to allow user to save songs they like
 
 
+
 Known issues:
 
 -Posts that contain a genre as a substring (POPular) are pushed through
 
--Very inefficient run-time 
+-Very inefficient run-time
 
 
 https://trinhmatt.github.io/Chunes/
