@@ -268,6 +268,7 @@ function deDupe() {
   cleanList(deDuped)
 }
 
+
 function cleanList(deDuped) {
   for (i=0; i<deDuped.length; i++) {
     var track = deDuped[i].title,
@@ -279,10 +280,13 @@ function cleanList(deDuped) {
     if (openSquare !== -1) {
       var firstBracket = track.substring(openSquare,closeSquare+1)
       //Better to replace because the first bracket can occur after the title
-      deDuped[i].title = track.replace(firstBracket,'')
+      var fixedTitle = track.replace(firstBracket,'')
       if (openSquare2 !== -1) {
         var secondBracket = track.substring(openSquare2, closeSquare2+1)
-        deDuped[i].title = track.replace(secondBracket, '')
+        fixedTitle = fixedTitle.replace(secondBracket, '')
+        deDuped[i].title = fixedTitle
+      } else {
+        deDuped[i].title = fixedTitle
       }
     }
   }
