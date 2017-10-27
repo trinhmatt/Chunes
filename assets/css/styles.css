@@ -191,10 +191,10 @@ td {
 }
 
 #error-display {
-  background: rgba(255,255,255,0.2);
+  background: rgb(255, 0, 0);
   width: 15%;
   margin: 10px auto;
-  color: rgb(255, 0, 0);
+  color: white;
   display:none;
   font-size: 14px;
 }

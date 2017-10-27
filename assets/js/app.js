@@ -26,7 +26,7 @@ var genreToggle = $('#slide').on('click', function(){
   } else {
     $('#slide').html('Genres +')
   }
-  })
+})
 
 var buttonHover = $('button').hover(
   function() {
@@ -34,7 +34,7 @@ var buttonHover = $('button').hover(
   },
   function() {
     $(this).toggleClass('bclicked')
-  })
+})
 
 var addGenre = $('#genre').keypress(function(e){
   var l1 = '<li>'
