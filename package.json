@@ -1,0 +1,24 @@
+{
+  "name": "chunes",
+  "version": "1.0.0",
+  "description": "Curates a list of music from different subreddits",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trinhmatt/Chunes.git"
+  },
+  "author": "Matthew Trinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trinhmatt/Chunes/issues"
+  },
+  "homepage": "https://github.com/trinhmatt/Chunes#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}

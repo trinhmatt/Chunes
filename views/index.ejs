@@ -1,0 +1,38 @@
+<% include partials/header %>
+<h1>CHUNES</h1>
+<div class='container'>
+  <button class='body-butt' id='slide'>Genres +</button>
+  <div class='genres' style='display:none'>
+    <input type='text' id='genre' placeholder="Add genre" name='genre'></input>
+    <ul id='allGenres'>
+    </ul>
+  </div>
+  <button class='body-butt' id='get'>Get tracks</button>
+  <div id='error-display'>
+    Error: No genres added
+  </div>
+  <div id='instructions'>
+    <h2>Instructions</h2>
+    <ul>
+      <li>Click on Genres to add your favourite genres</li>
+      <li>Get your chunes</li>
+    </ul>
+  </div>
+  <div id='loader'></div>
+  <table id='songList'>
+    <tbody id='song2'>
+      <tr>
+        <th>
+          <button class='tableHead' id='sort'>Upvotes</button>
+        </th>
+        <th>
+          <button class='tableHead alpha-sort' id='title'>Title</button>
+        </th>
+        <th id='widthCorrect'>
+          <button class='tableHead alpha-sort' id='genreTable'>Genre</button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<% include partials/footer %>

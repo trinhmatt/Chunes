@@ -207,7 +207,6 @@ function listentothis() {
       retrieve(data, r_music)
     });
   } else {
-    //Next step
     $('#error-display').slideToggle(300).delay(800).fadeOut(200)
   }
 }
@@ -221,7 +220,7 @@ function r_music() {
   )
 }
 
-//Refactor this shit
+//Refactor this
 function hipFresh()  {
   var genre = 'hip hop'
   var hip = false
@@ -268,7 +267,7 @@ function deDupe() {
   cleanList(deDuped)
 }
 
-
+//Removes [FRESH] and [GENRE] tags from track titles
 function cleanList(deDuped) {
   for (i=0; i<deDuped.length; i++) {
     var track = deDuped[i].title,
@@ -293,6 +292,7 @@ function cleanList(deDuped) {
   add_track(deDuped)
 }
 
+//Populates the DOM with the track links
 function add_track(deDuped) {
   var tr = '<tr>',
       tr2 = '</tr>',
