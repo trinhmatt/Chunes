@@ -162,7 +162,7 @@ function retrieve(data,callback) {
             title: post.data.title,
             url: post.data.url,
             ups: post.data.ups,
-            genre: myGenres[i],
+            genre: myGenres[i]
           }
           window.allTracks.push(track)
         }
