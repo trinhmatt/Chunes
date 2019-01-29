@@ -122,10 +122,6 @@ li:hover span{
   display: none;
 }
 
-#allGenres li:last-child {
-  display: none;
-}
-
 .bclicked {
   background: rgba(255,255,255,0.3);
 }

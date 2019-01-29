@@ -1,5 +1,23 @@
 var allTracks = [];
-var myGenres = [];
+
+
+var myGenres = {
+  hipHop: {
+    isSelected: false,
+    //I want to be able to search for any songs that match these keywords
+    subgenreSrings: ['rap, hop']
+  },
+  pop: {
+    isSelected: false,
+    //I want to be able to search for any songs that match these keywords
+    subgenreSrings: ['pop, dream']
+  },
+  rock: {
+    isSelected: false,
+    //I want to be able to search for any songs that match these keywords
+    subgenreSrings: ['rock, math, garage']
+  }
+};
 
 var getTunes = $('#get').click(listentothis);
 
@@ -17,7 +35,7 @@ var listHover = $("#songList").on("mouseenter", 'a', function() {
   $(this).toggleClass('hover');
 });
 
-
+//Shows and hides the list of genres
 var genreToggle = $('#slide').on('click', function(){
   $('.genres').slideToggle(500)
   $('#slide').toggleClass('minus')
@@ -28,6 +46,15 @@ var genreToggle = $('#slide').on('click', function(){
   }
 })
 
+//Add or remove genre from the list
+var genreSelect = $('.genre').on('click', function(){
+  //All genre labels have their selector string as their ID
+  var genre = ($(this).next().attr('id'))
+
+  //Check or uncheck the corresponding genre from the global object
+  myGenres[genre].isSelected = !myGenres[genre].isSelected
+})
+
 var buttonHover = $('button').hover(
   function() {
     $(this).toggleClass('bclicked')
@@ -36,35 +63,7 @@ var buttonHover = $('button').hover(
     $(this).toggleClass('bclicked')
 })
 
-var addGenre = $('#genre').keypress(function(e){
-  var l1 = '<li>'
-  var l2 = '</li>'
-  var delBtn = '<span><i class="fa fa-trash" aria-hidden="true"></i></span>'
-  var genre = $('#genre').val()
-  if (e.which == 13 && genre !== '') {
-    genre = genre.toLowerCase()
-    myGenres.push(genre)
-    $('#allGenres').append(l1+delBtn+genre+l2)
-    $('#allGenres li:last-child').fadeIn(400)
-    $('#genre').val('')
-  }
-})
-
-var deleteGenre = $('#allGenres').on('click', 'span', function(event){
-  $(this).parent().fadeOut(400, function(){
-    $(this).remove()
-  })
-  //To select the adjacent text
-  var text = $(this).parent().first().contents().filter(function() {
-    return this.nodeType == 3;
-  }).text()
-  for (i=0; i<myGenres.length; i++) {
-    if (myGenres[i] === text) {
-      myGenres.splice(i, 1)
-    }
-  }
-});
-
+//Sort song list by net upvotes
 var upsSort = $('#sort').on('click', function(){
   var sorting = true,
       table = document.getElementById('song2'),
@@ -157,7 +156,7 @@ function retrieve(data,callback) {
     function (i, post) {
       for (i=0; i<myGenres.length; i++) {
         //.toLowerCase so I can reduce the amount of loops I have to make
-        if (post.data.title.toLowerCase().indexOf(myGenres[i]) >= 0) {
+        if (post.data.title.toLowerCase().indexOf(myGenres[i]) > -1) {
           var track = {
             title: post.data.title,
             url: post.data.url,
@@ -177,7 +176,7 @@ function headRetrieve(data, genre, callback) {
   $.each(
     data.data.children,
     function (i, post) {
-      if (post.data.title.indexOf('FRESH')>=0) {
+      if (post.data.title.indexOf('FRESH') > -1) {
         var htrack = {
           title: post.data.title,
           url: post.data.url,
