@@ -1,9 +1,9 @@
-/*
-NEED A BETTER WAY TO DO THE RETRIEVAL OTHER THAN SETTING A TIMEOUT
-GENRE DOESN'T WORK, ALWAYS USES THE LAST ONE FOR ALL OF THEM
-*/
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+var upsSort = require('./sort').upsSort,
+    alphaSort = require('./sort').alphaSort;
+
 var allTracks = [];
-var searchData = [];
+
 
 var myGenres = {
   hipHop: {
@@ -75,14 +75,29 @@ var titleSort = $("#title").on('click', alphaSort),
 
 
 
+
+
 //https://www.reddit.com/r/listentothis/search.json?q=title:rock&sort=top&t=week&restrict_sr=on
-
 //For multi-genre subreddits (listentothis, music)
-function retrieve(searchResults, genre) {
-  for (let i = 0; i < searchResults.data.children.length; i++) {
-
-  }
-  console.log(window.allTracks)
+function retrieve(data,callback) {
+  $.each(
+    data.data.children,
+    function (i, post) {
+      for (i=0; i<myGenres.length; i++) {
+        //.toLowerCase so I can reduce the amount of loops I have to make
+        if (post.data.title.toLowerCase().indexOf(myGenres[i]) > -1) {
+          var track = {
+            title: post.data.title,
+            url: post.data.url,
+            ups: post.data.ups,
+            genre: myGenres[i]
+          }
+          window.allTracks.push(track)
+        }
+      }
+    }
+  )
+  callback();
 }
 
 //For genre-specific subreddits (hiphopheads, indieheads, etc.)
@@ -91,7 +106,6 @@ function headRetrieve(data, genre, callback) {
     data.data.children,
     function (i, post) {
       if (post.data.title.indexOf('FRESH') > -1) {
-
         var htrack = {
           title: post.data.title,
           url: post.data.url,
@@ -105,7 +119,6 @@ function headRetrieve(data, genre, callback) {
   callback();
 }
 
-//https://www.reddit.com/r/listentothis/search.json?q=title:rock&sort=top&t=week&restrict_sr=on
 function listentothis() {
   //Check if user added genres
   if ($('#allGenres li').length > 0) {
@@ -115,39 +128,12 @@ function listentothis() {
     $('#songList').css('display', 'none')
     //To make sure that retrieving tracks more than once does not stack the same list twice
     $('#song2 tr').slice(1).remove()
-
-    //Clear list of tracks
     window.allTracks = []
-
-    //Iterate through myGenres object to see which genres to search for
-    for (var genre in window.myGenres) {
-      if (window.myGenres[genre].isSelected) {
-        //Needed to track the selected genre since javascript doesnt carry it down so many nested commands
-        var genreString = genre;
-
-        //Originally built on ES5 so cant substitute variables in strings
-        var searchString = "https://www.reddit.com/r/listentothis/search.json?q=title:"+genreString+"&sort=top&t=week&restrict_sr=on"
-        //Get the JSON my performing search query on reddit, add trackdata to global object
-        $.getJSON(
-        searchString,
-        function (data) {
-          var searchResults = data.data.children;
-
-          for (var i = 0; i<searchResults.length; i++) {
-            var trackData = searchResults[i].data;
-            var track = {
-              title: trackData.title,
-              url: trackData.url,
-              ups: trackData.ups,
-              genre: genreString
-            }
-            window.allTracks.push(track)
-          }
-        });
-      }
-    }
-    //Need to wait to allow loop to fetch all the data
-    setTimeout(function() {deDupe(window.allTracks)}, 2000)
+    $.getJSON(
+    'https://www.reddit.com/r/listentothis/.json?limit=100&after=t3_10omtd/',
+    function (data) {
+      retrieve(data, r_music)
+    });
   } else {
     $('#error-display').slideToggle(300).delay(800).fadeOut(200)
   }
@@ -254,6 +240,7 @@ function add_track(deDuped) {
   })
 }
 
+},{"./sort":2}],2:[function(require,module,exports){
 //Sort song list by net upvotes
 var upsSort = $('#sort').on('click', function(){
   var sorting = true,
@@ -335,3 +322,8 @@ function alphaSort(event){
     }
   }
 }
+
+module.exports.upsSort = upsSort
+module.exports.alphaSort = alphaSort
+
+},{}]},{},[1]);
