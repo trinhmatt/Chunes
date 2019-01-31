@@ -2,8 +2,9 @@
 NEED A BETTER WAY TO DO THE RETRIEVAL OTHER THAN SETTING A TIMEOUT
 GENRE DOESN'T WORK, ALWAYS USES THE LAST ONE FOR ALL OF THEM
 */
-var allTracks = [];
-var searchData = [];
+var allTracks = [],
+    nResults = 1;
+
 
 var myGenres = {
   hipHop: {
@@ -75,16 +76,6 @@ var titleSort = $("#title").on('click', alphaSort),
 
 
 
-//https://www.reddit.com/r/listentothis/search.json?q=title:rock&sort=top&t=week&restrict_sr=on
-
-//For multi-genre subreddits (listentothis, music)
-function retrieve(searchResults, genre) {
-  for (let i = 0; i < searchResults.data.children.length; i++) {
-
-  }
-  console.log(window.allTracks)
-}
-
 //For genre-specific subreddits (hiphopheads, indieheads, etc.)
 function headRetrieve(data, genre, callback) {
   $.each(
@@ -118,6 +109,8 @@ function listentothis() {
 
     //Clear list of tracks
     window.allTracks = []
+    var searchStrings = {};
+
 
     //Iterate through myGenres object to see which genres to search for
     for (var genre in window.myGenres) {
@@ -127,79 +120,38 @@ function listentothis() {
 
         //Originally built on ES5 so cant substitute variables in strings
         var searchString = "https://www.reddit.com/r/listentothis/search.json?q=title:"+genreString+"&sort=top&t=week&restrict_sr=on"
+        searchStrings[genre] = searchString
         //Get the JSON my performing search query on reddit, add trackdata to global object
-        $.getJSON(
-        searchString,
-        function (data) {
-          var searchResults = data.data.children;
-
-          for (var i = 0; i<searchResults.length; i++) {
-            var trackData = searchResults[i].data;
-            var track = {
-              title: trackData.title,
-              url: trackData.url,
-              ups: trackData.ups,
-              genre: genreString
-            }
-            window.allTracks.push(track)
-          }
-        });
+        // $.getJSON(
+        // searchString,
+        // function (data) {
+        //   var searchResults = data.data.children;
+        //
+        //   for (var i = 0; i<searchResults.length; i++) {
+        //     var trackData = searchResults[i].data;
+        //     var track = {
+        //       title: trackData.title,
+        //       url: trackData.url,
+        //       ups: trackData.ups,
+        //       genre: genreString
+        //     }
+        //     window.allTracks.push(track)
+        //   }
+        // });
       }
     }
-    //Need to wait to allow loop to fetch all the data
-    setTimeout(function() {deDupe(window.allTracks)}, 2000)
+    $.post('/api/', searchStrings, function(response) {
+      console.log(response)
+    })
+
+    //Need to wait for all async actions to finish
+    // setTimeout(function() {deDupe(window.allTracks)}, 2000)
+
   } else {
     $('#error-display').slideToggle(300).delay(800).fadeOut(200)
   }
 }
 
-function r_music() {
-  $.getJSON(
-  'https://www.reddit.com/r/music/.json?limit=100&after=t3_10omtd/',
-  function (data) {
-    retrieve(data, hipFresh);
-  }
-  )
-}
-
-//Refactor this
-function hipFresh()  {
-  var genre = 'hip hop'
-  var hip = false
-  for (i=0; i<myGenres.length; i++) {
-    if (myGenres[i].indexOf('hip') >= 0) {
-      hip = true
-    }
-  }
-  if (hip === true) {
-    $.getJSON(
-    'https://www.reddit.com/r/hiphopheads.json?limit=100&after=t3_10omtd/',
-    function (data) {
-      headRetrieve(data, genre, indieFresh)
-    })
-  } else {
-  indieFresh();
-  }
-}
-
-function indieFresh() {
-  var genre = 'indie'
-  var indie = false
-  for (i=0; i<myGenres.length; i++) {
-    if (myGenres[i].indexOf('indie') >= 0) {
-      indie = true
-    }
-  }
-  if (indie === true) {
-    $.getJSON(
-    'https://www.reddit.com/r/indieheads.json?limit=100&after=t3_10omtd/',
-    function (data) {
-      headRetrieve(data, genre, deDupe)
-    })
-  } else {
-    deDupe();
-  }
-}
 
 //Removes duplicates
 function deDupe() {
@@ -254,6 +206,8 @@ function add_track(deDuped) {
   })
 }
 
+
+//SORT FUNCTIONS
 //Sort song list by net upvotes
 var upsSort = $('#sort').on('click', function(){
   var sorting = true,
