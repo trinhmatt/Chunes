@@ -1,10 +1,9 @@
 /*
 NEED A BETTER WAY TO DO THE RETRIEVAL OTHER THAN SETTING A TIMEOUT
 GENRE DOESN'T WORK, ALWAYS USES THE LAST ONE FOR ALL OF THEM
+    RELATED TO THE SAME BUG THAT FORCED ME TO USE TIMEOUT.. ON THE BACKBURNER FOR NOW
 */
-var allTracks = [],
-    nResults = 1;
-
+var allTracks = [];
 
 var myGenres = {
   hipHop: {
@@ -109,8 +108,6 @@ function listentothis() {
 
     //Clear list of tracks
     window.allTracks = []
-    var searchStrings = {};
-
 
     //Iterate through myGenres object to see which genres to search for
     for (var genre in window.myGenres) {
@@ -120,32 +117,29 @@ function listentothis() {
 
         //Originally built on ES5 so cant substitute variables in strings
         var searchString = "https://www.reddit.com/r/listentothis/search.json?q=title:"+genreString+"&sort=top&t=week&restrict_sr=on"
-        searchStrings[genre] = searchString
-        //Get the JSON my performing search query on reddit, add trackdata to global object
-        // $.getJSON(
-        // searchString,
-        // function (data) {
-        //   var searchResults = data.data.children;
-        //
-        //   for (var i = 0; i<searchResults.length; i++) {
-        //     var trackData = searchResults[i].data;
-        //     var track = {
-        //       title: trackData.title,
-        //       url: trackData.url,
-        //       ups: trackData.ups,
-        //       genre: genreString
-        //     }
-        //     window.allTracks.push(track)
-        //   }
-        // });
+
+        // Get the JSON my performing search query on reddit, add trackdata to global object
+        $.getJSON(
+        searchString,
+        function (data) {
+          var searchResults = data.data.children;
+
+          for (var i = 0; i<searchResults.length; i++) {
+            var trackData = searchResults[i].data;
+            var track = {
+              title: trackData.title,
+              url: trackData.url,
+              ups: trackData.ups,
+              genre: genreString
+            }
+            window.allTracks.push(track)
+          }
+        });
       }
     }
-    $.post('/api/', searchStrings, function(response) {
-      console.log(response)
-    })
 
-    //Need to wait for all async actions to finish
-    // setTimeout(function() {deDupe(window.allTracks)}, 2000)
+    // Need to wait for all async actions to finish
+    setTimeout(function() {deDupe(window.allTracks)}, 2000)
 
   } else {
     $('#error-display').slideToggle(300).delay(800).fadeOut(200)
